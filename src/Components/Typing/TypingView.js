@@ -16,7 +16,7 @@ const TypingView = ({ typingWords }) => {
               <div
                 key={l}
                 id={"Line" + l}
-                className="flex flex-row w-fit h-[40px] relative "
+                className="flex flex-row w-fit h-[40px] relative text-focus-in"
               >
                 <div
                   id={"Pacer" + l}
@@ -24,7 +24,7 @@ const TypingView = ({ typingWords }) => {
                 ></div>
                 <div
                   id={"Selector" + l}
-                  className="w-[4px] h-[90%] bg-c1 absolute   smoothSlow z-[80] hidden selector"
+                  className="w-[4px] h-[90%] bg-c1 absolute  smoothSlow z-[80] hidden selector "
                 ></div>
 
                 {line.map((word, i) => {
@@ -54,7 +54,7 @@ const TypingView = ({ typingWords }) => {
                                 "letter" +
                                 j.toString()
                               }
-                              className="mx-[1px] text-2xl font-bold box-border border-l-[3px] border-c2 word  text-white  w-[20px]"
+                              className="mx-[1px] text-2xl  font-bold box-border border-l-[3px] border-c2 word  text-white  w-[20px]"
                             >
                               &nbsp;&nbsp;&nbsp;
                             </div>

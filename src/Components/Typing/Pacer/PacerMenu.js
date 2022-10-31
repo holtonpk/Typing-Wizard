@@ -34,16 +34,16 @@ const PacerMenu = ({ speedResult, setPacerSpeed, restartTyping }) => {
   return (
     <div
       id="pacerMenu"
-      className="absolute top-0 w-screen h-screen z-[90] hidden"
+      className="absolute top-0 w-screen h-screen z-[110] hidden"
     >
       <button
-        className="absolute w-screen h-screen bg-black opacity-[60%] z-[70] "
+        className="absolute w-screen h-screen bg-black opacity-[60%] z-[100] "
         onClick={() => {
           document.getElementById("pacerMenu").classList.add("hidden");
           restartTyping();
         }}
       ></button>
-      <div className="absolute top-1/2 py-4 flex flex-col items-start gap-1 z-[80]  w-[500px] left-1/2  -translate-y-full -translate-x-1/2 rounded-lg bg-c6 overflow-hidden ">
+      <div className="absolute top-1/2 py-4 flex flex-col items-start gap-1 z-[110]  w-[500px] left-1/2  -translate-y-1/2 -translate-x-1/2 rounded-lg bg-c2 overflow-hidden ">
         <button
           onClick={() => {
             selectOption("pacerOff");

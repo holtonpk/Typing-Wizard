@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { json } from "react-router-dom";
 
 const Timer = ({
   start,
@@ -56,8 +57,20 @@ const Timer = ({
 
     let interval = null;
     if (isActive) {
+      console.log("Active");
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
+        if (seconds == 1) {
+          localStorage.setItem("speedMap", JSON.stringify([]));
+          localStorage.setItem("speedMapRaw", JSON.stringify([]));
+        }
+        let storedValues = JSON.parse(localStorage.getItem("speedMap"));
+        storedValues.push(correctCharacters);
+        localStorage.setItem("speedMap", JSON.stringify(storedValues));
+
+        let storedValuesRaw = JSON.parse(localStorage.getItem("speedMapRaw"));
+        storedValuesRaw.push(characters);
+        localStorage.setItem("speedMapRaw", JSON.stringify(storedValuesRaw));
       }, 1000);
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);

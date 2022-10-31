@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import scoreBg from "../../assets/score.svg";
 const Score = ({ score }) => {
   const [prevScore, setPrevScore] = useState(0);
 
@@ -29,8 +29,13 @@ const Score = ({ score }) => {
   });
 
   return (
-    <div className="relative z-50 flex flex-row w-[300px] p-10 -translate-x-1/2 rounded-b-full h-[150px] bg-c3 left-1/2 ">
-      <div className="relative flex flex-row w-fit items-center top-[10%] left-1/2 -translate-x-1/2 h-fit">
+    <div className="relative z-50 flex flex-row w-[400px]  -translate-x-1/2  h-[100px]  left-1/2  mb-10">
+      <img
+        src={scoreBg}
+        className="absolute top-0 left-0 w-full h-full"
+        alt=""
+      />
+      <div className="relative flex flex-row items-center -translate-x-1/2 top-4 w-fit left-1/2 h-fit">
         <div className="w-10 h-10 mr-6 rotate-45 bg-yellow-400 rounded-lg shadow-md"></div>
         <h1
           id="scoreElement"

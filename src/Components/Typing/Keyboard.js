@@ -9,6 +9,11 @@ const Keyboard = () => {
 
   const keyboardAnimation = (event) => {
     let keyPressed = String.fromCharCode(event.keyCode);
+
+    if (event.key == "CapsLock") {
+      document.getElementById("caps").classList.add("hit");
+    }
+
     if (keyPressed === " ") {
       keyPressed = "space";
     }
@@ -22,11 +27,19 @@ const Keyboard = () => {
     }
   };
 
+  const capsLock = (event) => {
+    if (event.key == "CapsLock") {
+      document.getElementById("caps").classList.remove("hit");
+    }
+  };
+
   useEffect(() => {
     if (localStorage.getItem("keyboardAnimation") == "keyboardAnimationTrue") {
       document.addEventListener("keydown", keyboardAnimation);
+      document.addEventListener("keyup", capsLock);
     } else {
       document.removeEventListener("keydown", keyboardAnimation);
+      document.removeEventListener("keyup", capsLock);
     }
   }, [localStorage.getItem("keyboardAnimation")]);
 

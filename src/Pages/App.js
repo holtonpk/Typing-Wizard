@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef } from "react";
-import Results from "../Components/Results.js";
-import QuickStats from "../Components/QuickStats";
-import TypingView from "../Components/TypingView.js";
+import Results from "../Results/Results.js";
+import QuickStats from "../Components/Typing/QuickStats";
+import TypingView from "../Components/Typing/TypingView.js";
 import wordList from "../assets/data.json";
-import Timer from "../Components/Timer.js";
-import Keyboard from "../Components/Keyboard.js";
+import Timer from "../Components/Typing/Timer.js";
+import Keyboard from "../Components/Typing/Keyboard.js";
 import bottomRight from "../assets/bottomRight2.svg";
-import Menu from "../Components/Menu.js";
+import Menu from "../Components/Header/Menu.js";
 import bottomLeft from "../assets/bottomLeft.svg";
-import Score from "../Components/Score";
-import Pacer from "../Components/Pacer.js";
-import PacerMenu from "../Components/PacerMenu.js";
-import Settings from "../Components/Settings.js";
+import Score from "../Components/Typing/Score";
+import Pacer from "../Components/Typing/Pacer/Pacer.js";
+import PacerMenu from "../Components/Typing/Pacer/PacerMenu.js";
+import Header from "../Components/Header/Header.js";
+import Footer from "../Components/Footer.js";
+import Settings from "../Components/Settings/Settings.js";
 function App() {
   const [wordSet, setWordSet] = useState(false);
   const [currentWord, setCurrentWord] = useState(0);
@@ -20,6 +22,7 @@ function App() {
   const [readyToType, setReadyToType] = useState(false);
   const [score, setScore] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [secondsResult, setSecondsResult] = useState(0);
   const [characters, setCharacters] = useState(0);
   const [correctCharacters, setCorrectCharacters] = useState(0);
   const [incorrectCharacters, setIncorrectCharacters] = useState(0);
@@ -217,8 +220,28 @@ function App() {
       currentLetterPosition + "px";
   };
 
+  const configTimeStamp = () => {
+    var timeStamp = new Date(parseInt(localStorage.getItem("timeStamp")));
+    var timeStampDate =
+      timeStamp.getFullYear() +
+      "/" +
+      (timeStamp.getMonth() + 1) +
+      "/" +
+      timeStamp.getDate();
+    var currentTimeStamp = Date.now();
+    var cts = new Date(currentTimeStamp);
+    var currentTimeStampDate =
+      cts.getFullYear() + "/" + (cts.getMonth() + 1) + "/" + cts.getDate();
+    if (currentTimeStampDate !== timeStampDate) {
+      localStorage.setItem("timeStamp", currentTimeStamp);
+    }
+    console.log(new Date(parseInt(localStorage.getItem("timeStamp"))));
+  };
+
   // ***************** useEffect
   useEffect(() => {
+    configTimeStamp();
+
     // set Pacer settings
     if (pacerSpeed == undefined) {
       configPacer();
@@ -259,15 +282,22 @@ function App() {
         currentWord == typingWords[currentLine].length - 1 &&
         currentLetter == typingWords[currentLine][currentWord].length
       ) {
+        setStart(false);
+
         console.log("&&&&&");
         setAccuracyResult(accuracy);
         setSpeedResult(speed);
         setRawSpeedResult(rawSpeed);
+        setSecondsResult(seconds);
 
         if (score > localStorage.getItem("hScore")) {
           localStorage.setItem("hScore", score);
           setShowHighScorePopup("score");
         }
+
+        let storedValues = JSON.parse(localStorage.getItem("aSpeed"));
+        storedValues.push(speed);
+        localStorage.setItem("aSpeed", JSON.stringify(storedValues));
 
         if (speed > localStorage.getItem("hSpeed")) {
           localStorage.setItem("hSpeed", speed);
@@ -370,7 +400,21 @@ function App() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-c2">
+    <div className="relative min-h-screen overflow-hidden bg-c2 ">
+      <Results
+        createWordList={createWordList}
+        CreateNewWordSet={CreateNewWordSet}
+        ShowHighScorePopup={ShowHighScorePopup}
+        restartTyping={restartTyping}
+        speed={speedResult}
+        accuracy={accuracyResult}
+        setTypingWords={setTypingWords}
+        score={score}
+        rawSpeed={rawSpeedResult}
+        characters={characters}
+        seconds={secondsResult}
+      />
+      <Header />
       <PacerMenu
         speedResult={speedResult}
         setPacerSpeed={setPacerSpeed}
@@ -383,17 +427,6 @@ function App() {
         CreateNewWordSet={CreateNewWordSet}
         restartTyping={restartTyping}
         maxCharacters={maxCharacters}
-      />
-      <Results
-        createWordList={createWordList}
-        CreateNewWordSet={CreateNewWordSet}
-        ShowHighScorePopup={ShowHighScorePopup}
-        restartTyping={restartTyping}
-        speed={speedResult}
-        accuracy={accuracyResult}
-        setTypingWords={setTypingWords}
-        score={score}
-        rawSpeed={rawSpeedResult}
       />
 
       <Pacer
@@ -418,70 +451,47 @@ function App() {
         correctCharacters={correctCharacters}
         setRawSpeed={setRawSpeed}
       />
-      <Score score={score} />
       <div
         id="hamMenu"
         className="absolute flex flex-col  w-20  left-[87%] top-10"
-      >
-        <button
-          onClick={() => (
-            document.getElementById("menu").classList.toggle("hidden"),
-            document
-              .getElementsByClassName("ham4")[0]
-              .classList.toggle("active")
-          )}
-          className="w-16 h-16 bg-c3 rounded-xl hover:opacity-20"
-        >
-          <svg
-            className="mx-auto ham hamRotate ham4 "
-            viewBox="0 0 100 100"
-            width="60"
-          >
-            <path
-              className="line top"
-              d="m 70,33 h -40 c 0,0 -8.5,-0.149796 -8.5,8.5 0,8.649796 8.5,8.5 8.5,8.5 h 20 v -20"
-            />
-            <path className="line middle" d="m 70,50 h -40" />
-            <path
-              className="line bottom"
-              d="m 30,67 h 40 c 0,0 8.5,0.149796 8.5,-8.5 0,-8.649796 -8.5,-8.5 -8.5,-8.5 h -20 v 20"
-            />
-          </svg>
-        </button>
-        <Menu restartTyping={restartTyping} />
-      </div>
+      ></div>
 
-      <div className="relative -translate-x-1/2   left-1/2 w-[70%]  ">
-        <TypingView typingWords={typingWords} />
-        {(() => {
-          if (showKeyboard) {
-            if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
-              return <Keyboard />;
+      <div id="typingScreen">
+        <Score score={score} />
+
+        <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
+          <TypingView typingWords={typingWords} />
+          {(() => {
+            if (showKeyboard) {
+              if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
+                return <Keyboard />;
+              }
             }
-          }
-        })()}
+          })()}
 
-        <QuickStats
-          speedResult={speedResult}
-          speed={speed}
-          incorrectCharacters={incorrectCharacters}
-          hScore={hScore}
-          characters={characters}
-          setAccuracyMain={setAccuracy}
-          pacerSpeed={pacerSpeed}
-          setPacerSpeed={setPacerSpeed}
-          restartTyping={restartTyping}
-          seconds={seconds}
-        />
+          <QuickStats
+            speedResult={speedResult}
+            speed={speed}
+            incorrectCharacters={incorrectCharacters}
+            hScore={hScore}
+            characters={characters}
+            setAccuracyMain={setAccuracy}
+            pacerSpeed={pacerSpeed}
+            setPacerSpeed={setPacerSpeed}
+            restartTyping={restartTyping}
+            seconds={seconds}
+          />
+        </div>
       </div>
+      <Footer />
       <img
         src={bottomRight}
-        className="absolute -translate-x-full -translate-y-full left-full top-full w-[20%]"
+        className="absolute -translate-x-full -translate-y-full left-full top-full w-[20%] z-[90]"
         alt=""
       />
       <img
         src={bottomLeft}
-        className="absolute left-0 -translate-y-full top-full w-[30%]"
+        className="absolute left-0 -translate-y-full top-full w-[30%] z-[90]"
         alt=""
       />
     </div>
