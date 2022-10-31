@@ -75,7 +75,7 @@ const Results = ({
           CreateNewWordSet();
           restartTyping();
         }}
-        className="w-screen h-screen bg-black z-[100] opacity-70 absolute"
+        className="w-screen h-[110vh] bg-black z-[100] opacity-70 absolute"
       ></button>
 
       <div className="absolute left-1/2 top-[50%]  -translate-x-1/2 -translate-y-1/2 h-fit w-[70%] z-[110] bg-c2 p-10 pb-4 rounded-xl fade-inr">
