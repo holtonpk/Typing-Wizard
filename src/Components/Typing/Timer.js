@@ -46,7 +46,6 @@ const Timer = ({
 
     let interval = null;
     if (isActive) {
-      console.log("Active");
       interval = setInterval(() => {
         setSeconds((seconds) => seconds + 1);
         if (seconds == 1) {

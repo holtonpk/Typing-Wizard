@@ -119,7 +119,7 @@ const Results = ({
             </div>
           </div>
 
-          <ResultsGraph seconds={seconds} averageSpeed={averageSpeed} />
+          {/* <ResultsGraph seconds={seconds} averageSpeed={averageSpeed} /> */}
         </div>
 
         <div className="flex flex-row justify-between w-full gap-16 mt-6">

@@ -267,7 +267,6 @@ function App() {
 
     // start timer
     if (currentWord == 0 && currentLetter == 1 && currentLine == 0 && !start) {
-      console.log("hh");
       setStart(true);
       if (pacerSpeed != "--") {
         setStartPacer(true);
@@ -282,8 +281,6 @@ function App() {
         currentLetter == typingWords[currentLine][currentWord].length
       ) {
         setStart(false);
-
-        console.log("&&&&&");
         setAccuracyResult(accuracy);
         setSpeedResult(speed);
         setRawSpeedResult(rawSpeed);

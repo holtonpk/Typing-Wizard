@@ -35,7 +35,6 @@ const TypingView = ({ typingWords }) => {
                   if (i <= line.length - 1) {
                     word2.push("&nbsp;");
                   }
-                  // console.log(word2);
                   return (
                     <div
                       key={i + word}
