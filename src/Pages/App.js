@@ -44,6 +44,19 @@ function App() {
   const typeListener = useRef(false);
   const lines = {};
 
+  const configLocalStorage = () => {
+    localStorage.setItem("speedMapRaw", 0);
+    localStorage.setItem("speedMap", 0);
+    localStorage.setItem("aSpeed", [50]);
+    localStorage.setItem("maxCharacters", 100);
+    localStorage.setItem("cursorType", "horizontalSelector");
+    localStorage.setItem("showKeyboard", "showKeyboardTrue");
+    localStorage.setItem("showResults", "showResultsTrue");
+    localStorage.setItem("keyboardAnimation", "keyboardAnimationTrue");
+    localStorage.setItem("customPacerSpeed", "50");
+  };
+  configLocalStorage();
+
   const createWordList = (newSet) => {
     if (newSet) {
       let line = 0;
