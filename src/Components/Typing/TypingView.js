@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 const TypingView = ({ typingWords }) => {
   if (typingWords !== undefined) {
@@ -60,9 +60,6 @@ const TypingView = ({ typingWords }) => {
                             </div>
                           );
                         }
-
-                        // console.log(tChar);
-
                         return (
                           <div
                             key={j + word}

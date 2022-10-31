@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { RiDashboard3Line } from "react-icons/ri";
-import { MdOutlineClose } from "react-icons/md";
-import { TiArrowSortedUp } from "react-icons/ti";
 const QuickStats = ({
   speed,
   incorrectCharacters,
   characters,
   setAccuracyMain,
   pacerSpeed,
-  seconds,
 }) => {
   const [accuracy, setAccuracy] = useState("--");
-  const [customPacerSpeed, setCustomPacerSpeed] = useState(100);
 
   useEffect(() => {
     setAccuracyMain(accuracy);
@@ -28,9 +24,6 @@ const QuickStats = ({
         <div className="flex flex-row justify-between gap-10 p-4 mx-auto mt-6 rounded-lg bg-c3 h-fit w-fit">
           <div className="flex flex-col items-center">
             <h1 className="text-lg text-white opacity-60 font-f1">Speed</h1>
-            {/* <h1 className="text-lg font-bold text-white font-f1">
-              {seconds / 10000}
-            </h1> */}
             <h1 className="text-lg font-bold text-white font-f1">{speed}</h1>
           </div>
           <div className="flex flex-col items-center">

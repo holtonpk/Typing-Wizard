@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-
-const Settings = ({
-  setShowKeyboard,
-  setMaxCharacters,
-  CreateNewWordSet,
-  restartTyping,
-}) => {
+import SettingsSelector from "./SettingsSelector.js";
+const Settings = ({ CreateNewWordSet, restartTyping }) => {
   const [maxCharactersLocal, setMaxCharactersLocal] = useState(
     localStorage.getItem("maxCharacters")
   );
   const [setSlider, setSetSlider] = useState(false);
-  const [settingToggles, setSettingToggles] = useState(0);
 
   useEffect(() => {
     if (!setSlider) {
       document.getElementById("totalCharacterSlider").value =
         localStorage.getItem("maxCharacters");
-
       document
         .getElementById(localStorage.getItem("cursorType"))
         .classList.add("buttonSelected");
@@ -39,62 +32,6 @@ const Settings = ({
     };
   });
 
-  const updateButton = (group, selected) => {
-    let selectedSetting = document.getElementsByClassName(group);
-    for (let i = 0; i < selectedSetting.length; i++) {
-      selectedSetting[i].classList.remove("buttonSelected");
-    }
-    document.getElementById(selected).classList.add("buttonSelected");
-  };
-
-  const resetHighScore = () => {
-    localStorage.setItem("hScore", 0);
-    document.getElementById("scoreNotification").classList.remove("hidden");
-    setTimeout(() => {
-      document.getElementById("scoreNotification").classList.add("hidden");
-    }, 3000);
-  };
-
-  const closeSettings = () => {
-    document.getElementById("settings").classList.remove("slide-in-bottom");
-    document.getElementById("settings").classList.add("slide-out-bottom");
-    document.getElementById("typingScreen").classList.remove("slide-out-top");
-    document.getElementById("typingScreen").classList.add("slide-in-top");
-  };
-
-  const setToDefault = () => {
-    localStorage.setItem("cursorType", "verticalSelector");
-    localStorage.setItem("showKeyboard", "showKeyboardTrue");
-    localStorage.setItem("showResults", "showResultsTrue");
-    localStorage.setItem("keyboardAnimation", "keyboardAnimationTrue");
-
-    setMaxCharactersLocal(100);
-
-    let settingButtons = document.getElementsByClassName("settingButton");
-
-    for (let i = 1; i < settingButtons.length; i++) {
-      settingButtons[i].classList.remove("buttonSelected");
-    }
-    document
-      .getElementById(localStorage.getItem("cursorType"))
-      .classList.add("buttonSelected");
-    document
-      .getElementById(localStorage.getItem("showKeyboard"))
-      .classList.add("buttonSelected");
-    document
-      .getElementById(localStorage.getItem("showResults"))
-      .classList.add("buttonSelected");
-    document
-      .getElementById(localStorage.getItem("keyboardAnimation"))
-      .classList.add("buttonSelected");
-
-    localStorage.setItem("maxCharacters", 100);
-    setSetSlider(false);
-    restartTyping();
-    CreateNewWordSet();
-    setShowKeyboard(true);
-  };
-
   return (
     <div
       id="settings"
@@ -112,164 +49,64 @@ const Settings = ({
           localStorage.setItem("maxCharacters", maxCharactersLocal);
           restartTyping();
           CreateNewWordSet();
-          closeSettings();
+          document
+            .getElementById("settings")
+            .classList.remove("slide-in-bottom");
+          document.getElementById("settings").classList.add("slide-out-bottom");
+          document
+            .getElementById("typingScreen")
+            .classList.remove("slide-out-top");
+          document.getElementById("typingScreen").classList.add("slide-in-top");
         }}
         to={"/"}
         className="absolute z-50 top-10 left-20"
-      >
-        {/* <IoReturnUpBackOutline className="w-16 h-16 text-white left-10 fill-white" /> */}
-      </button>
+      ></button>
 
       <div className="relative ">
-        {/* <img src={bgImage} className="absolute z-0 w-full h-full" alt="" /> */}
-
         <div className="z-40 flex flex-col h-full px-10 mx-auto ">
           <div className="z-40 flex flex-col w-full gap-10 mt-10">
-            <div className="grid items-center justify-between w-full grid-cols-2 z-60 ">
-              <div className="flex flex-col">
-                <h1 className="z-40 text-2xl text-white w-fit font-f1">
-                  Cursor
-                </h1>
-                <h1 className="z-40 mb-2 text-lg text-white opacity-50 w-fit font-f1">
-                  Select the cursor you want
-                </h1>
-              </div>
-              <div className="flex flex-row gap-10 w-fit ">
-                <button
-                  onClick={() => {
-                    localStorage.setItem("cursorType", "horizontalSelector");
-                    updateButton("cursorType", "horizontalSelector");
-                    restartTyping();
-                  }}
-                  id="horizontalSelector"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1 cursorType settingButton"
-                >
-                  Horizontal
-                </button>
-                <button
-                  onClick={() => {
-                    localStorage.setItem("cursorType", "verticalSelector");
-                    updateButton("cursorType", "verticalSelector");
-                    restartTyping();
-                  }}
-                  id="verticalSelector"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg p-w bg-c3 font-f1 hover:bg-c1 cursorType settingButton"
-                >
-                  Vertical
-                </button>
-              </div>
-            </div>
+            <SettingsSelector
+              restartTyping={restartTyping}
+              title="Cursor"
+              description="Select the cursor you want"
+              group="cursorType"
+              options={[
+                { id: "horizontalSelector", text: "Horizontal" },
+                { id: "verticalSelector", text: "Vertical" },
+              ]}
+            />
 
-            <div className="grid items-center justify-between w-full grid-cols-2 z-60 ">
-              <div className="flex flex-col">
-                <h1 className="z-40 text-2xl text-white w-fit font-f1">
-                  Keyboard
-                </h1>
-                <h1 className="z-40 mb-2 text-lg text-white opacity-50 w-fit font-f1">
-                  Show Helper Keyboard
-                </h1>
-              </div>
-              <div className="flex flex-row gap-10 w-fit ">
-                <button
-                  onClick={() => {
-                    localStorage.setItem("showKeyboard", "showKeyboardTrue");
-                    updateButton("showKeyboard", "showKeyboardTrue");
+            <SettingsSelector
+              restartTyping={restartTyping}
+              title="Keyboard"
+              description="Show Helper Keyboard"
+              group="showKeyboard"
+              options={[
+                { id: "showKeyboardTrue", text: "Show" },
+                { id: "showKeyboardFalse", text: "Hide" },
+              ]}
+            />
+            <SettingsSelector
+              restartTyping={restartTyping}
+              title="Show Results"
+              description="Show Helper Keyboard"
+              group="showResults"
+              options={[
+                { id: "showResultsTrue", text: "On" },
+                { id: "showResultsFalse", text: "Off" },
+              ]}
+            />
 
-                    restartTyping();
-                    setShowKeyboard(true);
-                  }}
-                  id="showKeyboardTrue"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1 showKeyboard settingButton"
-                >
-                  Show
-                </button>
-                <button
-                  onClick={() => {
-                    localStorage.setItem("showKeyboard", "showKeyboardFalse");
-                    updateButton("showKeyboard", "showKeyboardFalse");
-
-                    restartTyping();
-                    setShowKeyboard(false);
-                  }}
-                  id="showKeyboardFalse"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg p-w bg-c3 font-f1 hover:bg-c1 showKeyboard settingButton"
-                >
-                  Hide
-                </button>
-              </div>
-            </div>
-
-            <div className="grid items-center justify-between w-full grid-cols-2 z-60 ">
-              <div className="flex flex-col">
-                <h1 className="z-40 text-2xl text-white w-fit font-f1">
-                  Show Results
-                </h1>
-                <h1 className="z-40 mb-2 text-lg text-white opacity-50 w-fit font-f1">
-                  Show Helper Keyboard
-                </h1>
-              </div>
-              <div className="flex flex-row gap-10 w-fit ">
-                <button
-                  onClick={() => {
-                    localStorage.setItem("showResults", "showResultsTrue");
-                    updateButton("showResults", "showResultsTrue");
-                  }}
-                  id="showResultsTrue"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1 showResults settingButton"
-                >
-                  On
-                </button>
-                <button
-                  onClick={() => {
-                    localStorage.setItem("showResults", "showResultsFalse");
-                    updateButton("showResults", "showResultsFalse");
-                  }}
-                  id="showResultsFalse"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg p-w bg-c3 font-f1 hover:bg-c1 showResults settingButton"
-                >
-                  Off
-                </button>
-              </div>
-            </div>
-
-            <div className="grid items-center justify-between w-full grid-cols-2 z-60 ">
-              <div className="flex flex-col">
-                <h1 className="z-40 text-2xl text-white w-fit font-f1">
-                  Keyboard Animation
-                </h1>
-                <h1 className="z-40 mb-2 text-lg text-white opacity-50 w-fit font-f1">
-                  Show Helper Keyboard
-                </h1>
-              </div>
-              <div className="flex flex-row gap-10 w-fit ">
-                <button
-                  onClick={() => {
-                    localStorage.setItem(
-                      "keyboardAnimation",
-                      "keyboardAnimationTrue"
-                    );
-                    updateButton("keyboardAnimation", "keyboardAnimationTrue");
-                  }}
-                  id="keyboardAnimationTrue"
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1 keyboardAnimation settingButton"
-                >
-                  On
-                </button>
-                <button
-                  id="keyboardAnimationFalse"
-                  onClick={() => {
-                    localStorage.setItem(
-                      "keyboardAnimation",
-                      "keyboardAnimationFalse"
-                    );
-                    updateButton("keyboardAnimation", "keyboardAnimationFalse");
-                  }}
-                  className="w-40 p-3 text-xl font-bold text-white rounded-lg p-w bg-c3 font-f1 hover:bg-c1 keyboardAnimation settingButton"
-                >
-                  Off
-                </button>
-              </div>
-            </div>
+            <SettingsSelector
+              restartTyping={restartTyping}
+              title="Keyboard Animation"
+              description="Show Helper Keyboard"
+              group="keyboardAnimation"
+              options={[
+                { id: "keyboardAnimationTrue", text: "On" },
+                { id: "keyboardAnimationFalse", text: "Off" },
+              ]}
+            />
           </div>
 
           <div className="sliderContainer z-[90] relative mt-8 float-left  grid grid-cols-2 items-center">
@@ -289,13 +126,57 @@ const Settings = ({
 
           <div className="z-40 flex flex-row gap-4 mt-16">
             <button
-              onClick={setToDefault}
+              onClick={() => {
+                localStorage.setItem("cursorType", "verticalSelector");
+                localStorage.setItem("showKeyboard", "showKeyboardTrue");
+                localStorage.setItem("showResults", "showResultsTrue");
+                localStorage.setItem(
+                  "keyboardAnimation",
+                  "keyboardAnimationTrue"
+                );
+
+                setMaxCharactersLocal(100);
+
+                let settingButtons =
+                  document.getElementsByClassName("settingButton");
+
+                for (let i = 1; i < settingButtons.length; i++) {
+                  settingButtons[i].classList.remove("buttonSelected");
+                }
+                document
+                  .getElementById(localStorage.getItem("cursorType"))
+                  .classList.add("buttonSelected");
+                document
+                  .getElementById(localStorage.getItem("showKeyboard"))
+                  .classList.add("buttonSelected");
+                document
+                  .getElementById(localStorage.getItem("showResults"))
+                  .classList.add("buttonSelected");
+                document
+                  .getElementById(localStorage.getItem("keyboardAnimation"))
+                  .classList.add("buttonSelected");
+
+                localStorage.setItem("maxCharacters", 100);
+                setSetSlider(false);
+                restartTyping();
+                CreateNewWordSet();
+              }}
               className="p-3 text-xl font-bold text-white bg-c5 font-f1 rounded-xl hover:opacity-50"
             >
               Reset to Default
             </button>
             <button
-              onClick={resetHighScore}
+              onClick={() => {
+                localStorage.setItem("hScore", 0);
+                document
+                  .getElementById("scoreNotification")
+                  .classList.remove("hidden");
+                setTimeout(() => {
+                  document
+                    .getElementById("scoreNotification")
+                    .classList.add("hidden");
+                }, 3000);
+              }}
               className="p-3 text-xl font-bold text-white bg-c6 font-f1 rounded-xl hover:opacity-50"
             >
               Reset High Score

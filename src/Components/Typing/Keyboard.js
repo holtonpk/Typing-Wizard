@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
 
 const Keyboard = () => {
-  // ----------------------------------------------------------------
-
-  const keys = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
-
-  const timestamps = [];
-
   const keyboardAnimation = (event) => {
     let keyPressed = String.fromCharCode(event.keyCode);
 
@@ -43,9 +37,6 @@ const Keyboard = () => {
     }
   }, [localStorage.getItem("keyboardAnimation")]);
 
-  // targetRandomKey();
-
-  // ----------------------------------------------------------------
   return (
     <div className="mx-auto keyboard w-fit">
       <ul className="row row-0">

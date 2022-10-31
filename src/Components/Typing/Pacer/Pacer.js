@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 
 const Pacer = ({
+  pacerLine,
+  setPacerLine,
+  setStartPacer,
+  typingWords,
   pacerSpeed,
   startPacer,
-  typingWords,
-  setStartPacer,
-  setPacerLine,
-  pacerLine,
 }) => {
   const calculateSpeed = () => {
     let length = 0;

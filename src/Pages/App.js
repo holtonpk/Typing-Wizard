@@ -6,7 +6,6 @@ import wordList from "../assets/data.json";
 import Timer from "../Components/Typing/Timer.js";
 import Keyboard from "../Components/Typing/Keyboard.js";
 import bottomRight from "../assets/bottomRight2.svg";
-import Menu from "../Components/Header/Menu.js";
 import bottomLeft from "../assets/bottomLeft.svg";
 import Score from "../Components/Typing/Score";
 import Pacer from "../Components/Typing/Pacer/Pacer.js";
@@ -15,11 +14,9 @@ import Header from "../Components/Header/Header.js";
 import Footer from "../Components/Footer.js";
 import Settings from "../Components/Settings/Settings.js";
 function App() {
-  const [wordSet, setWordSet] = useState(false);
   const [currentWord, setCurrentWord] = useState(0);
   const [currentLetter, setCurrentLetter] = useState(0);
   const [currentLine, setCurrentLine] = useState(0);
-  const [readyToType, setReadyToType] = useState(false);
   const [score, setScore] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [secondsResult, setSecondsResult] = useState(0);
@@ -27,25 +24,18 @@ function App() {
   const [correctCharacters, setCorrectCharacters] = useState(0);
   const [incorrectCharacters, setIncorrectCharacters] = useState(0);
   const [incPerLine, setIncPerLine] = useState(0);
-  // const [incPerLine, setIncPerLine] = useState({ 0: 0 });
   const [start, setStart] = useState(false);
-  const [isActive, setIsActive] = useState(false);
   const [speed, setSpeed] = useState("--");
   const [rawSpeed, setRawSpeed] = useState("--");
   const [accuracy, setAccuracy] = useState("--");
-  const [hScore, setHScore] = useState("--");
   const [ShowHighScorePopup, setShowHighScorePopup] = useState(false);
   const [speedResult, setSpeedResult] = useState("--");
   const [rawSpeedResult, setRawSpeedResult] = useState("--");
   const [accuracyResult, setAccuracyResult] = useState(undefined);
-  const [showKeyboard, setShowKeyboard] = useState(true);
-  const [showResults, setShowResults] = useState(true);
-
   const [typingWords, setTypingWords] = useState(undefined);
   const [maxCharacters, setMaxCharacters] = useState(100);
   const [maxWordLen, setMaxWordLen] = useState(6);
   const [lineLength, setLineLength] = useState(38);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [pacerSpeed, setPacerSpeed] = useState(undefined);
   const [startPacer, setStartPacer] = useState(false);
   const [pacerLine, setPacerLine] = useState(0);
@@ -55,14 +45,11 @@ function App() {
   const lines = {};
 
   const createWordList = (newSet) => {
-    console.log("mm", localStorage.getItem("maxCharacters"));
     if (newSet) {
       let line = 0;
       lines[line] = [];
-
       let currentLineLength = 0;
       let totalCharacters = 0;
-
       for (let i = 0; i < wordList.length; i++) {
         let randomValue = Math.floor(Math.random() * wordList.length);
         if (wordList[randomValue].length <= maxWordLen) {
@@ -72,12 +59,10 @@ function App() {
 
             currentLineLength = 0;
           }
-
           lines[line].push(wordList[randomValue]);
           totalCharacters += wordList[randomValue].length;
           currentLineLength += wordList[randomValue].length;
         }
-
         if (totalCharacters >= localStorage.getItem("maxCharacters")) {
           i = wordList.length;
         }
@@ -204,7 +189,6 @@ function App() {
     let currentLetterElement = document.getElementById(
       "line" + line + "word" + word + "letter" + letter
     );
-
     // If typedValue == expectedValue -- add correct class -- add to streak -- next letter
     currentLetterElement.classList.remove("correct");
     currentLetterElement.classList.remove("incorrect");
@@ -235,20 +219,17 @@ function App() {
     if (currentTimeStampDate !== timeStampDate) {
       localStorage.setItem("timeStamp", currentTimeStamp);
     }
-    console.log(new Date(parseInt(localStorage.getItem("timeStamp"))));
   };
 
   // ***************** useEffect
   useEffect(() => {
     configTimeStamp();
-
     // set Pacer settings
     if (pacerSpeed == undefined) {
       configPacer();
     }
 
     // add selector to first letter
-    // console.log("mx", maxCharacters);
     if (
       currentLine == 0 &&
       currentLetter == 0 &&
@@ -402,7 +383,6 @@ function App() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-c2 ">
       <Results
-        createWordList={createWordList}
         CreateNewWordSet={CreateNewWordSet}
         ShowHighScorePopup={ShowHighScorePopup}
         restartTyping={restartTyping}
@@ -410,23 +390,19 @@ function App() {
         accuracy={accuracyResult}
         setTypingWords={setTypingWords}
         score={score}
-        rawSpeed={rawSpeedResult}
         characters={characters}
+        rawSpeed={rawSpeedResult}
         seconds={secondsResult}
       />
-      <Header />
+      <Header restartTyping={restartTyping} />
       <PacerMenu
         speedResult={speedResult}
         setPacerSpeed={setPacerSpeed}
         restartTyping={restartTyping}
-        pacerSpeed={pacerSpeed}
       />
       <Settings
-        setShowKeyboard={setShowKeyboard}
-        setMaxCharacters={setMaxCharacters}
         CreateNewWordSet={CreateNewWordSet}
         restartTyping={restartTyping}
-        maxCharacters={maxCharacters}
       />
 
       <Pacer
@@ -436,50 +412,33 @@ function App() {
         typingWords={typingWords}
         pacerSpeed={pacerSpeed}
         startPacer={startPacer}
-        incPerLine={incPerLine}
-        setIncPerLine={setIncPerLine}
-        incorrectCharactersm={incorrectCharacters}
-        time={seconds / 10000}
       />
 
       <Timer
+        start={start}
         seconds={seconds}
         setSeconds={setSeconds}
-        start={start}
         setSpeed={setSpeed}
         characters={characters}
         correctCharacters={correctCharacters}
         setRawSpeed={setRawSpeed}
       />
-      <div
-        id="hamMenu"
-        className="absolute flex flex-col  w-20  left-[87%] top-10"
-      ></div>
 
       <div id="typingScreen">
         <Score score={score} />
-
         <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
           <TypingView typingWords={typingWords} />
           {(() => {
-            if (showKeyboard) {
-              if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
-                return <Keyboard />;
-              }
+            if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
+              return <Keyboard />;
             }
           })()}
-
           <QuickStats
-            speedResult={speedResult}
             speed={speed}
             incorrectCharacters={incorrectCharacters}
-            hScore={hScore}
             characters={characters}
             setAccuracyMain={setAccuracy}
             pacerSpeed={pacerSpeed}
-            setPacerSpeed={setPacerSpeed}
-            restartTyping={restartTyping}
-            seconds={seconds}
           />
         </div>
       </div>

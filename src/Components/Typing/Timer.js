@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { json } from "react-router-dom";
 
 const Timer = ({
   start,
@@ -13,15 +12,6 @@ const Timer = ({
   const [isActive, setIsActive] = useState(false);
   const [wpm, setWpm] = useState(0);
   const [wpmRaw, setWpmRaw] = useState(0);
-
-  function toggle() {
-    setIsActive(!isActive);
-  }
-
-  function reset() {
-    setSeconds(0);
-    setIsActive(false);
-  }
 
   const calcWpm = () => {
     let words = Math.round(correctCharacters / 5);
@@ -50,7 +40,6 @@ const Timer = ({
 
     if (start) {
       setIsActive(true);
-      //   setStart(false);
     } else {
       setIsActive(false);
     }

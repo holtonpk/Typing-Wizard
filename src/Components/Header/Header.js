@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../../assets/wizard.png";
 import Menu from "./Menu.js";
-const Header = () => {
+const Header = ({ restartTyping }) => {
   return (
     <div className="flex flex-row justify-between h-20 p-5 bg-c3">
       <button
@@ -20,7 +20,7 @@ const Header = () => {
         <img src={logo} className="w-12 h-12" />
         <h1 className="text-2xl font-bold text-c1 font-f1">Typing Wizard</h1>
       </button>
-      <Menu />
+      <Menu restartTyping={restartTyping} />
     </div>
   );
 };

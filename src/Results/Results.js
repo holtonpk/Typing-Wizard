@@ -4,7 +4,6 @@ import { MdRestartAlt, MdNavigateNext } from "react-icons/md";
 import Confetti from "react-confetti";
 import ResultsGraph from "../Results/ResultsGraph.js";
 const Results = ({
-  createWordList,
   CreateNewWordSet,
   ShowHighScorePopup,
   restartTyping,
