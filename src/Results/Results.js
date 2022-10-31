@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoSettingsSharp } from "react-icons/io5";
 import { MdRestartAlt, MdNavigateNext } from "react-icons/md";
 import Confetti from "react-confetti";
-import ResultsGraph from "../Results/ResultsGraph.js";
+// import ResultsGraph from "../Results/ResultsGraph.js";
 const Results = ({
   CreateNewWordSet,
   ShowHighScorePopup,
