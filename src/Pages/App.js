@@ -439,7 +439,7 @@ function App() {
         setRawSpeed={setRawSpeed}
       />
 
-      <div id="typingScreen">
+      <div id="typingScreen" className="mb-6">
         <Score score={score} />
         <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
           <TypingView typingWords={typingWords} />

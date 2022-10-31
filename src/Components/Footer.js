@@ -6,7 +6,7 @@ import { BsTwitter } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <div className="absolute bottom-0 flex flex-row items-center h-10 gap-6 -translate-x-1/2 w-fit left-1/2 ">
+    <div className="absolute bottom-0 flex flex-row items-center h-10 gap-6 mt-6 -translate-x-1/2 w-fit left-1/2 ">
       <a
         href="https://github.com/holtonpk/typingGame"
         target="_blank"
