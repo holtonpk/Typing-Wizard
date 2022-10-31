@@ -3,8 +3,7 @@ import { TiArrowSortedUp } from "react-icons/ti";
 
 const PacerMenu = ({ speedResult, setPacerSpeed, restartTyping }) => {
   const [customPacerSpeed, setCustomPacerSpeed] = useState(
-    // parseInt(localStorage.getItem("customPacerSpeed"))
-    50
+    parseInt(localStorage.getItem("customPacerSpeed"))
   );
 
   useEffect(() => {
@@ -96,6 +95,7 @@ const PacerMenu = ({ speedResult, setPacerSpeed, restartTyping }) => {
         <button
           onClick={() => {
             selectOption("pacerHigh");
+            setPacerSpeed(localStorage.getItem("hSpeed"));
           }}
           id="pacerHigh"
           className="w-full p-2 pl-10 text-xl font-bold text-left text-c8 hover:text-c1 font-f1 pacerMenuItem"

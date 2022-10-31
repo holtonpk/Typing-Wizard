@@ -30,7 +30,7 @@ const Pacer = ({
   };
 
   useEffect(() => {
-    if (startPacer) {
+    if (startPacer && pacerSpeed != undefined) {
       let pacerElement = document.getElementById("Pacer" + pacerLine);
       pacerElement.style.animationDuration = calculateSpeed() + "s";
       pacerElement.classList.remove("hidden");

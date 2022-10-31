@@ -49,7 +49,13 @@ const QuickStats = ({
         >
           <RiDashboard3Line className="w-8 h-8" />
           <h1 className="text-xl font-f1">
-            {"Pacer : " + pacerSpeed + " wpm"}
+            {(() => {
+              if (localStorage.getItem("pacerType") == "pacerOff") {
+                return "Pacer off";
+              } else {
+                return "Pacer : " + pacerSpeed + " wpm";
+              }
+            })()}
           </h1>
         </div>
       </div>
