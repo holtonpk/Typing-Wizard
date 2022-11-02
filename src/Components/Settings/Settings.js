@@ -42,7 +42,7 @@ const Settings = ({
   return (
     <div
       id="settings"
-      className="absolute left-1/2 hidden -translate-x-1/2 h-fit w-[50%]  overflow-hidden bg-c2  z-[80] mx-auto slide-in-bottom "
+      className="absolute hidden left-1/2 min-w-[725px] -translate-x-1/2 h-fit w-[50%]   overflow-hidden bg-c2  z-[80] mx-auto slide-in-bottom "
     >
       <div className="relative ">
         <div className="z-40 flex flex-col h-full px-10 mx-auto ">
@@ -107,7 +107,7 @@ const Settings = ({
             />
           </div>
 
-          <div className="z-40 flex flex-row gap-4 mt-16">
+          <div className="z-40 flex flex-row gap-4 mx-auto mt-10">
             <button
               onClick={() => {
                 configLocalStorageSettings();
