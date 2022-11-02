@@ -1,4 +1,4 @@
-![Alt text](src/assets/Screen%20Shot%202022-10-31%20at%202.15.08%20PM.png "Title")
+![Alt text](src/assets/gitBanner.png "Title")
 
 # About
 

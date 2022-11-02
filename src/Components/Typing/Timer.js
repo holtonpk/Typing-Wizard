@@ -55,6 +55,10 @@ const Timer = ({
         let storedValues = JSON.parse(localStorage.getItem("speedMap"));
         storedValues.push(correctCharacters);
         localStorage.setItem("speedMap", JSON.stringify(storedValues));
+        localStorage.setItem(
+          "currentSession",
+          parseInt(localStorage.getItem("currentSession")) + 1
+        );
 
         let storedValuesRaw = JSON.parse(localStorage.getItem("speedMapRaw"));
         storedValuesRaw.push(characters);

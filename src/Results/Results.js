@@ -157,7 +157,39 @@ const Results = ({
               {seconds + "s"}
             </h1>
             <h1 className="text-sm font-bold text-c8 font-f1">
-              {"00:00:44 session"}
+              {(() => {
+                let totalSeconds = parseInt(
+                  localStorage.getItem("currentSession")
+                );
+
+                let minutes = 0;
+                let hours = 0;
+                let seconds = totalSeconds;
+
+                if (seconds / 60 >= 1) {
+                  minutes = Math.round(seconds / 60);
+                  seconds = seconds % 60;
+                }
+
+                if (minutes / 60 >= 1) {
+                  hours = Math.round(minutes / 60);
+                  minutes = minutes % 60;
+                }
+
+                if (minutes.toString().length == 1) {
+                  minutes = "0" + minutes.toString();
+                }
+
+                if (seconds.toString().length == 1) {
+                  seconds = "0" + seconds.toString();
+                }
+
+                if (hours.toString().length == 1) {
+                  hours = "0" + hours.toString();
+                }
+
+                return hours + ":" + minutes + ":" + seconds + " session";
+              })()}
             </h1>
           </div>
         </div>

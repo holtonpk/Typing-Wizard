@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const TypingView = ({ typingWords }) => {
+const TypingView = ({ typingWords, cursorType }) => {
+  useEffect(() => {
+    if (typingWords !== undefined) {
+      document.getElementById("Selector0").classList.remove("hidden");
+    }
+  }, [cursorType]);
+
   if (typingWords !== undefined) {
     return (
       <div
@@ -24,7 +30,10 @@ const TypingView = ({ typingWords }) => {
                 ></div>
                 <div
                   id={"Selector" + l}
-                  className="w-[4px] h-[90%] bg-c1 absolute  smoothSlow z-[80] hidden selector "
+                  className={
+                    " bg-c1 absolute  smoothSlow z-[80] hidden selector " +
+                    cursorType
+                  }
                 ></div>
 
                 {line.map((word, i) => {

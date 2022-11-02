@@ -23,6 +23,17 @@ button:focus {
   color: white;
 }
 
+.verticalSelector {
+  width: 4px;
+  height: 90%;
+}
+.horizontalSelector {
+  width: 22px;
+  height: 4px;
+  bottom: 0px;
+  padding-left: 6px;
+}
+
 .incorrect {
   color: red;
 }

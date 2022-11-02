@@ -35,7 +35,7 @@ const SettingsSelector = ({
               }}
               id={option.id}
               className={
-                "w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1  " +
+                "w-40 p-3 text-xl font-bold text-white rounded-lg font-f1 p-w bg-c3 hover:bg-c1  settingsOption " +
                 group
               }
             >

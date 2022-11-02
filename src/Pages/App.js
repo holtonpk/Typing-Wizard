@@ -13,6 +13,8 @@ import PacerMenu from "../Components/Typing/Pacer/PacerMenu.js";
 import Header from "../Components/Header/Header.js";
 import Footer from "../Components/Footer.js";
 import Settings from "../Components/Settings/Settings.js";
+import Confirmation from "../Components/Settings/Confirmation.js";
+
 function App() {
   const [currentWord, setCurrentWord] = useState(0);
   const [currentLetter, setCurrentLetter] = useState(0);
@@ -36,21 +38,19 @@ function App() {
   const [maxCharacters, setMaxCharacters] = useState(100);
   const [maxWordLen, setMaxWordLen] = useState(6);
   const [lineLength, setLineLength] = useState(38);
+  const [showKeyboard, setShowKeyboard] = useState(true);
+  const [cursorType, setCursorType] = useState("verticalSelector");
+  const [keyboardAnimation, setKeyboardAnimation] = useState(true);
   const [pacerSpeed, setPacerSpeed] = useState(undefined);
   const [startPacer, setStartPacer] = useState(false);
   const [pacerLine, setPacerLine] = useState(0);
-
   const createdWordList = useRef(false);
   const typeListener = useRef(false);
   const lines = {};
 
-  const configLocalStorage = () => {
-    localStorage.setItem("speedMapRaw", "[]");
-    localStorage.setItem("speedMap", "[]");
-    localStorage.setItem("aSpeed", "[]");
-    localStorage.setItem("hSpeed", "0");
+  const configLocalStorageSettings = () => {
     localStorage.setItem("maxCharacters", 100);
-    localStorage.setItem("cursorType", "horizontalSelector");
+    localStorage.setItem("cursorType", "verticalSelector");
     localStorage.setItem("showKeyboard", "showKeyboardTrue");
     localStorage.setItem("showResults", "showResultsTrue");
     localStorage.setItem("keyboardAnimation", "keyboardAnimationTrue");
@@ -58,8 +58,18 @@ function App() {
     localStorage.setItem("pacerType", "pacerOff");
   };
 
-  if (localStorage.length < 11) {
-    configLocalStorage();
+  const configLocalStorageUserData = () => {
+    localStorage.setItem("speedMapRaw", "[]");
+    localStorage.setItem("speedMap", "[]");
+    localStorage.setItem("aSpeed", "[]");
+    localStorage.setItem("hSpeed", "0");
+    localStorage.setItem("hScore", "0");
+    localStorage.setItem("currentSession", 0);
+  };
+
+  if (localStorage.length < 12) {
+    configLocalStorageSettings();
+    configLocalStorageUserData();
   }
 
   const createWordList = (newSet) => {
@@ -89,6 +99,16 @@ function App() {
   };
 
   const typingListener = (event) => {
+    if (event.key == "r" && event.ctrlKey) {
+      restartTyping();
+      return;
+    }
+    if (event.key == "n" && event.ctrlKey) {
+      setTypingWords([]);
+      CreateNewWordSet();
+      restartTyping();
+      return;
+    }
     let nextLine = currentLine;
     let nextWord = currentWord;
     let nextLetter = currentLetter;
@@ -222,30 +242,45 @@ function App() {
       currentLetterPosition + "px";
   };
 
-  const configTimeStamp = () => {
-    var timeStamp = new Date(parseInt(localStorage.getItem("timeStamp")));
-    var timeStampDate =
-      timeStamp.getFullYear() +
+  const configTimeStampDay = () => {
+    var TimeStampDay = new Date(parseInt(localStorage.getItem("TimeStampDay")));
+    var TimeStampDayDate =
+      TimeStampDay.getFullYear() +
       "/" +
-      (timeStamp.getMonth() + 1) +
+      (TimeStampDay.getMonth() + 1) +
       "/" +
-      timeStamp.getDate();
-    var currentTimeStamp = Date.now();
-    var cts = new Date(currentTimeStamp);
-    var currentTimeStampDate =
+      TimeStampDay.getDate();
+    var currentTimeStampDay = Date.now();
+    var cts = new Date(currentTimeStampDay);
+    var currentTimeStampDayDate =
       cts.getFullYear() + "/" + (cts.getMonth() + 1) + "/" + cts.getDate();
-    if (currentTimeStampDate !== timeStampDate) {
-      localStorage.setItem("timeStamp", currentTimeStamp);
+    if (currentTimeStampDayDate !== TimeStampDayDate) {
+      localStorage.setItem("TimeStampDay", currentTimeStampDay);
+      localStorage.setItem("currentSession", 0);
+    }
+  };
+
+  const shortCutListener = (event) => {
+    if (event.key == "r" && event.ctrlKey) {
+      restartTyping();
+    }
+    if (event.key == "n" && event.ctrlKey) {
+      setTypingWords([]);
+      CreateNewWordSet();
+      restartTyping();
     }
   };
 
   // ***************** useEffect
+
   useEffect(() => {
-    configTimeStamp();
+    configTimeStampDay();
     // set Pacer settings
     if (pacerSpeed == undefined) {
       configPacer();
     }
+
+    // while active add to timestamp
 
     // add selector to first letter
     if (
@@ -292,8 +327,10 @@ function App() {
         }
 
         let storedValues = JSON.parse(localStorage.getItem("aSpeed"));
-        storedValues.push(speed);
-        localStorage.setItem("aSpeed", JSON.stringify(storedValues));
+        if (speed !== "--") {
+          storedValues.push(speed);
+          localStorage.setItem("aSpeed", JSON.stringify(storedValues));
+        }
 
         if (speed > localStorage.getItem("hSpeed")) {
           localStorage.setItem("hSpeed", speed);
@@ -307,6 +344,9 @@ function App() {
           CreateNewWordSet();
           restartTyping();
         }
+
+        document.addEventListener("keydown", shortCutListener);
+        return () => document.removeEventListener("keydown", shortCutListener);
       } else {
         // Typing listener
         if (!typeListener.current && typingWords != undefined) {
@@ -393,10 +433,15 @@ function App() {
     }
     document.getElementById("Selector0").classList.remove("hidden");
     typeListener.current = false;
+
+    setShowKeyboard(localStorage.getItem("showKeyboard"));
+    setCursorType(localStorage.getItem("cursorType"));
+    setKeyboardAnimation(localStorage.getItem("keyboardAnimation"));
   };
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-c2 ">
+      <Confirmation configLocalStorageUserData={configLocalStorageUserData} />
       <Results
         CreateNewWordSet={CreateNewWordSet}
         ShowHighScorePopup={ShowHighScorePopup}
@@ -418,6 +463,7 @@ function App() {
       <Settings
         CreateNewWordSet={CreateNewWordSet}
         restartTyping={restartTyping}
+        configLocalStorageSettings={configLocalStorageSettings}
       />
 
       <Pacer
@@ -442,10 +488,12 @@ function App() {
       <div id="typingScreen" className="mb-6">
         <Score score={score} />
         <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
-          <TypingView typingWords={typingWords} />
+          <TypingView typingWords={typingWords} cursorType={cursorType} />
           {(() => {
-            if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
-              return <Keyboard />;
+            if (showKeyboard) {
+              if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
+                return <Keyboard keyboardAnimationv={keyboardAnimation} />;
+              }
             }
           })()}
           <QuickStats

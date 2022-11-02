@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-const Keyboard = () => {
+const Keyboard = ({ keyboardAnimationv }) => {
   const keyboardAnimation = (event) => {
     let keyPressed = String.fromCharCode(event.keyCode);
 
@@ -35,7 +35,7 @@ const Keyboard = () => {
       document.removeEventListener("keydown", keyboardAnimation);
       document.removeEventListener("keyup", capsLock);
     }
-  }, [localStorage.getItem("keyboardAnimation")]);
+  }, [keyboardAnimationv]);
 
   return (
     <div className="mx-auto keyboard w-fit">

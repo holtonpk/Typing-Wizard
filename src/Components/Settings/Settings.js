@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import SettingsSelector from "./SettingsSelector.js";
-const Settings = ({ CreateNewWordSet, restartTyping }) => {
+const Settings = ({
+  CreateNewWordSet,
+  restartTyping,
+  configLocalStorageSettings,
+}) => {
   const [maxCharactersLocal, setMaxCharactersLocal] = useState(
     localStorage.getItem("maxCharacters")
   );
@@ -29,6 +33,9 @@ const Settings = ({ CreateNewWordSet, restartTyping }) => {
     output.innerHTML = slider.value;
     slider.oninput = function () {
       setMaxCharactersLocal(this.value);
+      localStorage.setItem("maxCharacters", this.value);
+      restartTyping();
+      CreateNewWordSet();
     };
   });
 
@@ -37,31 +44,6 @@ const Settings = ({ CreateNewWordSet, restartTyping }) => {
       id="settings"
       className="absolute left-1/2 hidden -translate-x-1/2 min-h-screen w-[50%]  overflow-hidden bg-c2  z-[80] mx-auto slide-in-bottom  "
     >
-      <div
-        id="scoreNotification"
-        className=" hidden absolute z-[80] bg-c7 shadow-xl top-[98%] left-1/2  -translate-x-1/2 -translate-y-full h-fit p-3 w-[30%] text-white rounded-xl text-center text-2xl slide-in-bottom "
-      >
-        high score has been reset
-      </div>
-
-      <button
-        onClick={() => {
-          localStorage.setItem("maxCharacters", maxCharactersLocal);
-          restartTyping();
-          CreateNewWordSet();
-          document
-            .getElementById("settings")
-            .classList.remove("slide-in-bottom");
-          document.getElementById("settings").classList.add("slide-out-bottom");
-          document
-            .getElementById("typingScreen")
-            .classList.remove("slide-out-top");
-          document.getElementById("typingScreen").classList.add("slide-in-top");
-        }}
-        to={"/"}
-        className="absolute z-50 top-10 left-20"
-      ></button>
-
       <div className="relative ">
         <div className="z-40 flex flex-col h-full px-10 mx-auto ">
           <div className="z-40 flex flex-col w-full gap-10 mt-10">
@@ -71,8 +53,9 @@ const Settings = ({ CreateNewWordSet, restartTyping }) => {
               description="Select the cursor you want"
               group="cursorType"
               options={[
-                { id: "horizontalSelector", text: "Horizontal" },
                 { id: "verticalSelector", text: "Vertical" },
+
+                { id: "horizontalSelector", text: "Horizontal" },
               ]}
             />
 
@@ -127,59 +110,31 @@ const Settings = ({ CreateNewWordSet, restartTyping }) => {
           <div className="z-40 flex flex-row gap-4 mt-16">
             <button
               onClick={() => {
-                localStorage.setItem("cursorType", "verticalSelector");
-                localStorage.setItem("showKeyboard", "showKeyboardTrue");
-                localStorage.setItem("showResults", "showResultsTrue");
-                localStorage.setItem(
-                  "keyboardAnimation",
-                  "keyboardAnimationTrue"
-                );
-
-                setMaxCharactersLocal(100);
-
+                configLocalStorageSettings();
                 let settingButtons =
-                  document.getElementsByClassName("settingButton");
+                  document.getElementsByClassName("settingsOption");
 
                 for (let i = 1; i < settingButtons.length; i++) {
                   settingButtons[i].classList.remove("buttonSelected");
                 }
-                document
-                  .getElementById(localStorage.getItem("cursorType"))
-                  .classList.add("buttonSelected");
-                document
-                  .getElementById(localStorage.getItem("showKeyboard"))
-                  .classList.add("buttonSelected");
-                document
-                  .getElementById(localStorage.getItem("showResults"))
-                  .classList.add("buttonSelected");
-                document
-                  .getElementById(localStorage.getItem("keyboardAnimation"))
-                  .classList.add("buttonSelected");
 
-                localStorage.setItem("maxCharacters", 100);
                 setSetSlider(false);
                 restartTyping();
                 CreateNewWordSet();
               }}
               className="p-3 text-xl font-bold text-white bg-c5 font-f1 rounded-xl hover:opacity-50"
             >
-              Reset to Default
+              Reset to Default Settings
             </button>
             <button
               onClick={() => {
-                localStorage.setItem("hScore", 0);
                 document
-                  .getElementById("scoreNotification")
+                  .getElementById("userDataPrompt")
                   .classList.remove("hidden");
-                setTimeout(() => {
-                  document
-                    .getElementById("scoreNotification")
-                    .classList.add("hidden");
-                }, 3000);
               }}
               className="p-3 text-xl font-bold text-white bg-c6 font-f1 rounded-xl hover:opacity-50"
             >
-              Reset High Score
+              Reset User Data
             </button>
           </div>
         </div>

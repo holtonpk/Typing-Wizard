@@ -41,6 +41,21 @@ const QuickStats = ({
             </h1>
           </div>
         </div>
+        <div className="flex flex-row justify-between gap-4 mx-auto mt-3 w-fit">
+          <div className="flex flex-row items-center gap-2">
+            <div className="p-1 py-0 rounded-md bg-c8 text-c2">Ctrl</div>
+            <div className="rounded-md text-c8">+</div>
+
+            <div className="p-1 py-0 rounded-md bg-c8 text-c2">r</div>
+            <div className="rounded-md text-c8">- Restart</div>
+          </div>
+          <div className="flex flex-row items-center gap-2">
+            <div className="p-1 py-0 rounded-md bg-c8 text-c2">Ctrl</div>
+            <div className="rounded-md text-c8">+</div>
+            <div className="p-1 py-0 rounded-md bg-c8 text-c2">n</div>
+            <div className="rounded-md text-c8">- New Set</div>
+          </div>
+        </div>
         <div
           onClick={() => {
             document.getElementById("pacerMenu").classList.remove("hidden");
