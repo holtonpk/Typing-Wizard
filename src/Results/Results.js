@@ -75,11 +75,11 @@ const Results = ({
           CreateNewWordSet();
           restartTyping();
         }}
-        className="w-screen h-[110vh] bg-black z-[100] opacity-70 absolute"
+        className="w-screen h-[110vh] bg-black z-[100] opacity-70 fixed"
       ></button>
 
       <div className="absolute left-1/2 top-[50%]  -translate-x-1/2 -translate-y-1/2 h-fit w-[70%] z-[110] bg-c2 p-10 pb-4 rounded-xl fade-inr">
-        <div className="flex flex-row gap-10">
+        <div className="flex flex-row gap-6">
           <div className="flex flex-col gap-10">
             <div className="flex flex-col justify-between ">
               <h1 className="text-2xl font-bold text-white font-f1">Score</h1>
@@ -194,7 +194,7 @@ const Results = ({
           </div>
         </div>
 
-        <div className="flex flex-row gap-6 mx-auto mt-4 w-fit ">
+        <div className="flex flex-row gap-6 mx-auto w-fit ">
           <button
             onClick={() => {
               restartTyping();

@@ -20,7 +20,7 @@ const QuickStats = ({
 
   return (
     <>
-      <div className="flex flex-col justify-between ">
+      <div className="z-30 flex flex-col justify-between ">
         <div className="flex flex-row justify-between gap-10 p-4 mx-auto mt-6 rounded-lg bg-c3 h-fit w-fit">
           <div className="flex flex-col items-center">
             <h1 className="text-lg text-white opacity-60 font-f1">Speed</h1>
