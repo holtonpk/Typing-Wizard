@@ -34,10 +34,10 @@ const PacerMenu = ({ speedResult, setPacerSpeed, restartTyping }) => {
   return (
     <div
       id="pacerMenu"
-      className="absolute top-0 w-screen h-screen z-[110] hidden"
+      className="fixed top-0 w-screen h-screen z-[110] hidden"
     >
       <button
-        className="absolute w-screen h-screen bg-black opacity-[60%] z-[100] "
+        className=" w-screen h-screen bg-black opacity-[60%] z-[100] "
         onClick={() => {
           document.getElementById("pacerMenu").classList.add("hidden");
           restartTyping();

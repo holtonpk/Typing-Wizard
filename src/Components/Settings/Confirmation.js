@@ -7,9 +7,9 @@ const Confirmation = ({ configLocalStorageUserData }) => {
         onClick={() => {
           document.getElementById("userDataPrompt").classList.add("hidden");
         }}
-        className="w-screen h-[110vh] bg-black z-[100] opacity-70 absolute top-0 left-0"
+        className="w-screen h-[110vh] bg-black z-[100] opacity-70 fixed top-0 left-0"
       ></button>
-      <div className="absolute z-[130] bg-c2 shadow-xl top-1/2 p-4  left-1/2  -translate-x-1/2 -translate-y-1/2 w-[400px] text-white rounded-xl text-center text-2xl ">
+      <div className="fixed z-[130] bg-c2 shadow-xl top-1/2 p-4  left-1/2  -translate-x-1/2 -translate-y-1/2 w-[400px] text-white rounded-xl text-center text-2xl ">
         <h1 className="mb-6 text-2xl font-bold text-white font-f1">
           Reset all user data?
         </h1>

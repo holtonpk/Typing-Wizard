@@ -439,6 +439,8 @@ function App() {
     setKeyboardAnimation(localStorage.getItem("keyboardAnimation"));
   };
 
+  document.body.style.overflow = "hidden";
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-c2 ">
       <Confirmation configLocalStorageUserData={configLocalStorageUserData} />
