@@ -42,7 +42,7 @@ const Settings = ({
   return (
     <div
       id="settings"
-      className="absolute left-1/2 hidden -translate-x-1/2 min-h-screen w-[50%]  overflow-hidden bg-c2  z-[80] mx-auto slide-in-bottom  "
+      className="absolute left-1/2 hidden -translate-x-1/2 h-fit w-[50%]  overflow-hidden bg-c2  z-[80] mx-auto slide-in-bottom "
     >
       <div className="relative ">
         <div className="z-40 flex flex-col h-full px-10 mx-auto ">

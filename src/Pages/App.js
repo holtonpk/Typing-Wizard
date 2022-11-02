@@ -39,6 +39,7 @@ function App() {
   const [maxWordLen, setMaxWordLen] = useState(6);
   const [lineLength, setLineLength] = useState(38);
   const [showKeyboard, setShowKeyboard] = useState(true);
+  const [settingsView, setSettingsView] = useState(false);
   const [cursorType, setCursorType] = useState("verticalSelector");
   const [keyboardAnimation, setKeyboardAnimation] = useState(true);
   const [pacerSpeed, setPacerSpeed] = useState(undefined);
@@ -274,6 +275,7 @@ function App() {
   // ***************** useEffect
 
   useEffect(() => {
+    console.log("ss", start);
     configTimeStampDay();
     // set Pacer settings
     if (pacerSpeed == undefined) {
@@ -316,6 +318,7 @@ function App() {
         currentLetter == typingWords[currentLine][currentWord].length
       ) {
         setStart(false);
+        console.log("finnished");
         setAccuracyResult(accuracy);
         setSpeedResult(speed);
         setRawSpeedResult(rawSpeed);
@@ -456,7 +459,11 @@ function App() {
         rawSpeed={rawSpeedResult}
         seconds={secondsResult}
       />
-      <Header restartTyping={restartTyping} />
+      <Header
+        restartTyping={restartTyping}
+        score={score}
+        setSettingsView={setSettingsView}
+      />
       <PacerMenu
         speedResult={speedResult}
         setPacerSpeed={setPacerSpeed}
@@ -487,26 +494,45 @@ function App() {
         setRawSpeed={setRawSpeed}
       />
 
-      <div id="typingScreen" className="mb-6">
-        <Score score={score} />
-        <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
-          <TypingView typingWords={typingWords} cursorType={cursorType} />
-          {(() => {
-            if (showKeyboard) {
-              if (localStorage.getItem("showKeyboard") == "showKeyboardTrue") {
-                return <Keyboard keyboardAnimationv={keyboardAnimation} />;
-              }
-            }
-          })()}
-          <QuickStats
-            speed={speed}
-            incorrectCharacters={incorrectCharacters}
-            characters={characters}
-            setAccuracyMain={setAccuracy}
-            pacerSpeed={pacerSpeed}
-          />
-        </div>
-      </div>
+      {(() => {
+        let padding = undefined;
+
+        if (settingsView) {
+          padding = "p-0  slide-out-top";
+          if (localStorage.getItem("showKeyboard") == "showKeyboardFalse") {
+            padding = "p-10 slide-out-top";
+          }
+        } else {
+          padding = "p-0 slide-in-top";
+          if (localStorage.getItem("showKeyboard") == "showKeyboardFalse") {
+            padding = "p-10 slide-in-top";
+          }
+        }
+
+        return (
+          <div id="typingScreen" className={"mb-6 z-[90]  " + padding}>
+            <div className="relative w-[70%]  left-1/2 -translate-x-1/2 -top-6">
+              <TypingView typingWords={typingWords} cursorType={cursorType} />
+              {(() => {
+                if (showKeyboard) {
+                  if (
+                    localStorage.getItem("showKeyboard") == "showKeyboardTrue"
+                  ) {
+                    return <Keyboard keyboardAnimationv={keyboardAnimation} />;
+                  }
+                }
+              })()}
+              <QuickStats
+                speed={speed}
+                incorrectCharacters={incorrectCharacters}
+                characters={characters}
+                setAccuracyMain={setAccuracy}
+                pacerSpeed={pacerSpeed}
+              />
+            </div>
+          </div>
+        );
+      })()}
       <Footer />
       <img
         src={bottomRight}
