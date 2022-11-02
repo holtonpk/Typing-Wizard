@@ -31,14 +31,14 @@ const Score = ({ score }) => {
   return (
     <div
       id="scoreContainer"
-      className="relative  flex flex-row w-[400px]   -translate-x-1/2  h-[90px]  left-1/2  mb-10"
+      className="relative  flex flex-row w-[400px] -top-12  -translate-x-1/2  h-[90px]  left-1/2  mb-10"
     >
       <img
         src={scoreBg}
         className="absolute top-0 left-0 w-full h-full"
         alt=""
       />
-      <div className="relative flex flex-row items-center -translate-x-1/2 top-4 w-fit left-1/2 h-fit">
+      <div className="relative top-0 flex flex-row items-center -translate-x-1/2 w-fit left-1/2 h-fit">
         <div className="w-10 h-10 mr-6 rotate-45 bg-yellow-400 rounded-lg shadow-md"></div>
         <h1
           id="scoreElement"

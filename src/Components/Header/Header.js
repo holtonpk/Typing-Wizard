@@ -4,7 +4,7 @@ import Menu from "./Menu.js";
 import Score from "../Typing/Score";
 const Header = ({ restartTyping, score, setSettingsView }) => {
   return (
-    <div id="header" className="h-40 mb-10">
+    <div id="header" className="mb-10 h-36 ">
       <div className="flex flex-row justify-between h-20 p-5 bg-c3">
         <button
           onClick={() => {

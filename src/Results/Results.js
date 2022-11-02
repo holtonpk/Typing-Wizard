@@ -58,7 +58,7 @@ const Results = ({
       {(() => {
         if (ShowHighScorePopup) {
           return (
-            <div id="highScoreWindow" className=" z-[120] absolute ">
+            <div id="highScoreWindow" className=" z-[120] absolute hs-confetti">
               <Confetti
                 width={window.innerWidth}
                 height={window.innerHeight}
@@ -90,7 +90,7 @@ const Results = ({
               {(() => {
                 if (ShowHighScorePopup == "score") {
                   return (
-                    <h1 className="absolute p-1 text-sm font-bold font-f1 text-white rounded-lg left-[120px] bg-c1">
+                    <h1 className="absolute p-1 text-sm font-bold font-f1 text-white rounded-lg left-[120px] bg-c1  high-score">
                       High Score
                     </h1>
                   );
@@ -105,12 +105,15 @@ const Results = ({
               {(() => {
                 if (ShowHighScorePopup == "speed") {
                   return (
-                    <h1 className="absolute p-1 text-sm font-bold text-white rounded-lg font-f1 left-[120px] bg-c1">
+                    <h1 className="absolute p-10 text-6xl font-bold text-white -translate-x-1/2 rounded-lg font-f1 left-1/2 bg-c1 high-score">
                       High Speed
                     </h1>
                   );
                 }
               })()}
+              {/* <h1 className="absolute p-10 text-6xl font-bold text-white -translate-x-1/2 rounded-lg font-f1 left-1/2 bg-c1 high-score">
+                High Speed
+              </h1> */}
             </div>
             <div className="flex flex-col">
               <h1 className="text-xl font-bold text-white font-f1">Accuracy</h1>
