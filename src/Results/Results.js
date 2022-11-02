@@ -210,6 +210,10 @@ const Results = ({
               document
                 .getElementById("typingScreen")
                 .classList.remove("slide-in-top");
+              document
+                .getElementById("scoreContainer")
+                .classList.add("fade-out");
+              document.getElementById("header").style.height = "2.5rem";
               setSettingsView(true);
             }}
             className="flex flex-row items-center gap-3 p-2 pr-3 text-2xl font-bold text-white font-f1 bg-c6 rounded-xl"
