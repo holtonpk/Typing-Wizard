@@ -14,6 +14,7 @@ const Results = ({
   characters,
   rawSpeed,
   seconds,
+  setSettingsView,
 }) => {
   const closeWindow = () => {
     document.getElementById("resultsWindow").classList.add("hidden");
@@ -209,6 +210,7 @@ const Results = ({
               document
                 .getElementById("typingScreen")
                 .classList.remove("slide-in-top");
+              setSettingsView(true);
             }}
             className="flex flex-row items-center gap-3 p-2 pr-3 text-2xl font-bold text-white font-f1 bg-c6 rounded-xl"
           >
