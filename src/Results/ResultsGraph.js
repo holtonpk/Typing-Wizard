@@ -73,7 +73,7 @@ const ResultsGraph = ({ seconds, averageSpeed }) => {
 
   const options = {
     animation: {
-      duration: "3s",
+      duration: 0,
     },
   };
 
