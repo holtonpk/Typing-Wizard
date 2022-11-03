@@ -71,9 +71,15 @@ const ResultsGraph = ({ seconds, averageSpeed }) => {
     ],
   };
 
+  const options = {
+    animation: {
+      duration: "3s",
+    },
+  };
+
   return (
     <div className="w-full h-full">
-      <Line data={data} />
+      <Line data={data} options={options} />
     </div>
   );
 };

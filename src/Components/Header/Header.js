@@ -8,19 +8,19 @@ const Header = ({ restartTyping, score, setSettingsView }) => {
       <div className="flex flex-row justify-between h-20 p-5 bg-c3">
         <button
           onClick={() => {
+            document.getElementById("settings").classList.remove("hidden");
             document
               .getElementById("settings")
-              .classList.remove("slide-in-bottom");
-            document
-              .getElementById("settings")
-              .classList.add("slide-out-bottom");
+              .classList.add("slide-in-bottom");
             document
               .getElementById("typingScreen")
-              .classList.remove("slide-out-top");
+              .classList.add("slide-out-top");
             document
               .getElementById("typingScreen")
-              .classList.add("slide-in-top");
-            setSettingsView(false);
+              .classList.remove("slide-in-top");
+            document.getElementById("scoreContainer").classList.add("fade-out");
+            document.getElementById("header").style.height = "2.5rem";
+            setSettingsView(true);
           }}
           className="flex flex-row items-center gap-3 w-fit"
         >

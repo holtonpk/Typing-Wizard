@@ -2,7 +2,7 @@
 
 # About
 
-Typing Wizard is a minimalistic and customizable typing test. It features many test modes, an account system to save your typing speed history, and user-configurable features such as pacer speed cursor type and more. Typing Wizard attempts to emulate the experience of natural typing during a typing test, by unobtrusively presenting the text prompts and displaying typed characters in-place, providing straightforward, real-time feedback on typos, speed, and accuracy.
+Typing Wizard is a minimalistic and customizable typing test/game. It features a local storage system to save your typing speed history, and user-configurable features such as pacer speed cursor type and more. Typing Wizard attempts to emulate the experience of natural typing during a typing test, by unobtrusively presenting the text prompts and displaying typed characters in-place, providing straightforward, real-time feedback on typos, speed, and accuracy.
 
 # Features
 
