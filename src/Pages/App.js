@@ -197,6 +197,7 @@ function App() {
     }
     typeListener.current = false;
     setCharacters(characters + 1);
+    // setCorrectCharacters(correctCharacters + 1);
 
     moveSelector(nextLine, nextWord, nextLetter);
   };
@@ -208,19 +209,17 @@ function App() {
 
     if (expectedValue == undefined && typedValue == " ") {
       typedValue = undefined;
+    }
+    if (expectedValue == typedValue) {
+      // If typedValue == expectedValue -- add correct class -- add to streak -- next letter
+      currentLetterElement.classList.add("correct");
+      setScore(score + 10);
+      setCorrectCharacters(correctCharacters + 1);
     } else {
-      if (expectedValue == typedValue) {
-        // If typedValue == expectedValue -- add correct class -- add to streak -- next letter
-        currentLetterElement.classList.add("correct");
-        setScore(score + 10);
-        setCorrectCharacters(correctCharacters + 1);
-      } else {
-        // If typedValue != expectedValue -- add incorrect class -- add to incorrect -- next letter
-        currentLetterElement.classList.add("incorrect");
-        setIncorrectCharacters(incorrectCharacters + 1);
-
-        setIncPerLine(incPerLine + 1);
-      }
+      // If typedValue != expectedValue -- add incorrect class -- add to incorrect -- next letter
+      currentLetterElement.classList.add("incorrect");
+      setIncorrectCharacters(incorrectCharacters + 1);
+      setIncPerLine(incPerLine + 1);
     }
   };
 
@@ -458,6 +457,7 @@ function App() {
         characters={characters}
         rawSpeed={rawSpeedResult}
         seconds={secondsResult}
+        setSettingsView={setSettingsView}
       />
       <Header
         restartTyping={restartTyping}
